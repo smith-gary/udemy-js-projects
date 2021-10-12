@@ -184,4 +184,31 @@ console.log(euro);
 // Spread operator used instead of apply method.
 book.call(euro, ...flightData);
 
+// Bind method, lets manually set the this keyword. doesn't immediately call the function.
+// book.call(euro, 23, 'Sarah');
+const bookEW = book.bind(euro); // does not call book function. makes new function
+const bookLuft = book.bind(luft);
+bookLuft(43, 'bob');
+bookEW(23, 'Steve');
 
+const bookEW23 = book.bind(euro, 23); // partial application
+bookEW23('sean');
+
+// objects with eventlisteners
+luft.planes = 300;
+luft.buyPlane = function () {
+    console.log(this);
+    this.planes++;
+    console.log(this.planes);
+};
+// luft.buyPlane();
+// the this keyword is pointing to the button vs the object. Thats why the result is NaN.
+document.querySelector('.buy').addEventListener('click', luft.buyPlane.bind(luft)); // using bind to tell this to bind to the luft object instead of the button element.
+
+// Partial application w/ bind
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVat = addTax.bind(null, 0.23);
+console.log(addVat(100));
