@@ -315,3 +315,26 @@ poll.displayResults.call({answers: [1, 5, 3, 9, 6, 1]}, 'string');
 */
 
 // CLOSURE /////////////
+
+// -Closure has priority over the scope chain.
+// -Closure is the closed over variable environment of the execution context
+// in which a function was created, even after that execution context is gone.
+// -A closure gives a function access to all the variables of its parent function,
+// even after ath parent function has returned. The function keeps a reference to its
+// outer scope, which preserves the scope chain throughout time.
+// -JS automatically acts on closures, we don't need to manually create them.
+const secureBooking = function () {
+    let passengerCount = 0;
+
+    return function () {
+        passengerCount++;
+        console.log(`${passengerCount} passengers`)
+    };
+};
+
+const booker = secureBooking();
+booker();
+booker();
+booker();
+
+console.dir(booker);
